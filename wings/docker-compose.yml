@@ -1,0 +1,44 @@
+x-common:
+ tunnel: &tunnel
+  - TUNNEL_TOKEN=
+
+networks:
+ ptero:
+  ipam:
+   config:
+    - subnet: 172.28.0.0/16
+
+services:
+ wings:
+  build:
+   context: ../wings
+   dockerfile: Dockerfile
+  restart: always
+  tty: true
+  environment:
+   TZ: Pacific/Auckland
+   WINGS_UID: 988
+   WINGS_GID: 988
+   WINGS_USERNAME: pterodactyl
+  volumes:
+   - ./:/etc/pterodactyl
+   # Do not change any of the below mounts
+   - /var/run/docker.sock:/var/run/docker.sock
+   - /var/lib/docker/containers:/var/lib/docker/containers
+   - /var/lib/pterodactyl:/var/lib/pterodactyl
+   - /var/log/pterodactyl:/var/log/pterodactyl
+   - /tmp/pterodactyl/:/tmp/pterodactyl/
+  networks:
+   - ptero
+  depends_on:
+   - panel
+
+ tunnel:
+  container_name: tunnel
+  image: cloudflare/cloudflared
+  restart: unless-stopped
+  command: tunnel run
+  environment:
+   <<: *tunnel
+  networks:
+   - ptero
