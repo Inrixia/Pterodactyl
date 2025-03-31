@@ -1,2 +1,3 @@
-plugins/**/*
+wings/wings.patch
+panel/plugins/**/*
 panel/config.yml

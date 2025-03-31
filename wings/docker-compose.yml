@@ -1,6 +1,5 @@
 x-common:
- tunnel: &tunnel
-  - TUNNEL_TOKEN=
+ tunnel_token: &tunnel_token TUNNEL_TOKEN=
 
 networks:
  ptero:
@@ -10,9 +9,7 @@ networks:
 
 services:
  wings:
-  build:
-   context: ../wings
-   dockerfile: Dockerfile
+  image: pterod-wings:latest
   restart: always
   tty: true
   environment:
@@ -39,6 +36,6 @@ services:
   restart: unless-stopped
   command: tunnel run
   environment:
-   <<: *tunnel
+   - *tunnel_token
   networks:
    - ptero

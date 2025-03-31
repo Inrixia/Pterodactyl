@@ -1,6 +1,5 @@
 x-common:
- tunnel: &tunnel
-  - TUNNEL_TOKEN=
+ tunnel_token: &tunnel_token TUNNEL_TOKEN=
  panel: &panel
   APP_URL: https://
   APP_SERVICE_AUTHOR: default@gmail.com
@@ -21,9 +20,7 @@ volumes:
 
 services:
  panel:
-  build:
-   context: .
-   dockerfile: Dockerfile
+  image: pterod-panel:latest
   restart: always
   volumes:
    - panel_srv:/srv/pterodactyl
@@ -45,9 +42,7 @@ services:
    - dragonfly
 
  wings:
-  build:
-   context: ../wings
-   dockerfile: Dockerfile
+  image: pterod-wings:latest
   restart: always
   tty: true
   environment:
@@ -74,7 +69,7 @@ services:
   restart: unless-stopped
   command: tunnel run
   environment:
-   <<: *tunnel
+   - *tunnel_token
   networks:
    - ptero
 

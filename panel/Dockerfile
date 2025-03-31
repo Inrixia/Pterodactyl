@@ -4,8 +4,8 @@ RUN wget https://github.com/JasonHorkles/darkenate/releases/download/v2.0.2/dark
 RUN blueprint -install darkenate.blueprint
 RUN rm darkenate.blueprint
 
-COPY plugins/modpack-installer/modpackinstaller.blueprint .
-COPY plugins/modpack-installer/egg-minecraft--java-edition-modpack-installer.json /app/database/Seeders/eggs/minecraft
+COPY plugins/modpackinstaller.blueprint .
+COPY plugins/egg-minecraft--java-edition-modpack-installer.json /app/database/Seeders/eggs/minecraft
 RUN blueprint -install modpackinstaller.blueprint
 RUN rm modpackinstaller.blueprint
 

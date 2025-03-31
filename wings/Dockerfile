@@ -8,7 +8,7 @@ RUN git clone https://github.com/pterodactyl/wings.git
 WORKDIR /app/wings
 
 # Patch file the container
-COPY plugins/modpack-installer/wings.patch .
+COPY wings.patch .
 RUN git apply wings.patch
 
 # Build the Wings binary
